@@ -34,26 +34,19 @@ const displayUrl = "https://lh4.googleusercontent.com/pyirBixNKOs_rc3C_Ff_rRPotD
 
   // });
 
-  webview.addEventListener('did-get-response-details', function(event, status, newURL, originalURL, httpResponseCode, requestMethod, referrer, headers, resourceType) {
-    lastHttpResponse = {
-        event:event, 
-        status:status, 
-        newURL:newURL, 
-        originalURL:originalURL, 
-        httpResponseCode:httpResponseCode, 
-        requestMethod:requestMethod, 
-        referrer:referrer, 
-        headers:headers, 
-        resourceType:resourceType
-    };
-    console.log('did-get-response-details', lastHttpResponse);
+  webview.addEventListener('did-get-response-details', function(details) {
+    console.log('did-get-response-details', details);
 
-    if (lastHttpResponse.httpResponseCode < 200 || lastHttpResponse.httpResponseCode >= 300)
+    hideInfo();
+
+    if (details.httpResponseCode < 200 || details.httpResponseCode >= 300)
     {
-        console.log(`last response code is ${lastHttpResponse.httpResponseCode}, re-loading URL ${displayUrl}`);
-        webview.src = displayUrl;
-    } else {
-        hideInfo();
+        console.log(`last response code is ${details.httpResponseCode}, re-loading URL ${displayUrl}`);
+        // TODO: display overlay message
+        
+        setTimeout(function() {
+          webview.src = displayUrl;
+        }, 5000);
     }
   });
   webview.addEventListener('crashed', function() {
