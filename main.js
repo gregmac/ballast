@@ -4,11 +4,6 @@ const app = electron.app
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 
-const displayUrl = "https://lh4.googleusercontent.com/pyirBixNKOs_rc3C_Ff_rRPotD0kdLOj9CBfVsJzBKgfdrPLfrYKrNI04idpE9FD8rpmRkxf9OzX2xUcQ80MUzF-5ZSSCZw4XIVqOK_gEq7vBGu_GR9BeoEiaIPaDLXchQ";
-//const displayUrl = "http://httpstat.us/404";
-
-const infoPageUrl = `file://${__dirname}/index.html`;
-
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -17,11 +12,11 @@ let mainWindow
 let lastHttpResponse = null;
 
 function createWindow () {
-  electron.Menu.setApplicationMenu(null);
-  
+  //electron.Menu.setApplicationMenu(null);
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    fullscreen:true,
+    //fullscreen:true,
     backgroundColor:"#000",
     darkTheme: true,
     webPreferences:{
@@ -29,70 +24,10 @@ function createWindow () {
     }
   });
 
-  displayInfoPage(`Loading..`, `Please wait while the page is initially loaded.`);
-
-  mainWindow.webContents.on('did-fail-load', function(event, errorCode, errorDescription, validatedURL, isMainFrame) {
-    console.log('did-fail-load', {
-      event:event, 
-      errorCode:errorCode, 
-      errorDescription:errorDescription, 
-      validatedURL:validatedURL, 
-      isMainFrame:isMainFrame});
-
-    lastHttpResponse = null;
-    displayInfoPage(`Error`, `Page failed to load: ${errorDescription} (${errorCode})`);
-    
-    setTimeout(function() {
-      mainWindow.loadURL(displayUrl);
-    }, 5000);
-  });
-
-  // mainWindow.webContents.on('did-finish-load', function(event, e2, e3) {
-  //   console.log('did-finish-load', {event:event, e2:e2, e3:e3});
-    
-
-  // });
-
-  mainWindow.webContents.on('did-get-response-details', function(event, status, newURL, originalURL, httpResponseCode, requestMethod, referrer, headers, resourceType) {
-    if (originalURL != infoPageUrl) {
-      lastHttpResponse = {
-        event:event, 
-        status:status, 
-        newURL:newURL, 
-        originalURL:originalURL, 
-        httpResponseCode:httpResponseCode, 
-        requestMethod:requestMethod, 
-        referrer:referrer, 
-        headers:headers, 
-        resourceType:resourceType
-      };
-      console.log('did-get-response-details', lastHttpResponse);
-
-      
-      if (lastHttpResponse.httpResponseCode < 200 || lastHttpResponse.httpResponseCode >= 300)
-      {
-        console.log(`last response code is ${lastHttpResponse.httpResponseCode}, re-loading URL ${displayUrl}`);
-        mainWindow.loadURL(displayUrl);
-      }
-    }
-  });
-  mainWindow.webContents.on('new-window', function(event, url, frameName, disposition) {
-    console.log('new-window', {
-      event:event,
-      url:url,  
-      frameName:frameName, 
-      disposition:disposition});
-    event.preventDefault();
-  });
-  mainWindow.webContents.on('crashed', function() {
-    console.log('crashed');
-  });
-
-
-  mainWindow.loadURL(displayUrl);
+  mainWindow.loadURL(`file://${__dirname}/index.html`);
 
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
