@@ -3,6 +3,7 @@
 // All of the Node.js APIs are available in this process.
 
 let webview = document.getElementById('webcontent');
+let body = document.getElementsByTagName('body')[0]; 
 
 const displayUrl = "https://lh4.googleusercontent.com/pyirBixNKOs_rc3C_Ff_rRPotD0kdLOj9CBfVsJzBKgfdrPLfrYKrNI04idpE9FD8rpmRkxf9OzX2xUcQ80MUzF-5ZSSCZw4XIVqOK_gEq7vBGu_GR9BeoEiaIPaDLXchQ";
 //const displayUrl = "http://httpstat.us/404";
@@ -59,13 +60,14 @@ const displayUrl = "https://lh4.googleusercontent.com/pyirBixNKOs_rc3C_Ff_rRPotD
     console.log('crashed');
   });
 
+  
 function displayInfoPage(header, details)
 {
-    document.getElementsByTagName('body')[0].className += 'info';
+    body.className = 'info';
     document.getElementById('infoTitle').innerHTML = header;
     document.getElementById('infoText').innerHTML = details;
 }
 function hideInfo()
 {
-    document.getElementsByTagName('body')[0].className -= 'info;
+    body.className = '';
 }
