@@ -5,16 +5,13 @@
 let webview = document.getElementById('webcontent');
 let body = document.getElementsByTagName('body')[0]; 
 
-const {screen,remote} = require('electron');
+const {screen, remote} = require('electron');
 const {Menu, MenuItem} = remote;
 const _ = require('lodash');
 
-const settings = {
-  displayUrl: "http://httpstat.us/404",
-  //displayUrl: "https://lh4.googleusercontent.com/pyirBixNKOs_rc3C_Ff_rRPotD0kdLOj9CBfVsJzBKgfdrPLfrYKrNI04idpE9FD8rpmRkxf9OzX2xUcQ80MUzF-5ZSSCZw4XIVqOK_gEq7vBGu_GR9BeoEiaIPaDLXchQ",
-  failureRetryTime: 5000, // time in ms to retry after page failed to load (eg: network failure)
-  nonSuccessRetryTime: 15000, // time in ms to retry when getting a non-200 response code from server  
-};
+const settings = remote.getCurrentWindow().settings;
+console.log('settings', settings);
+
 window.addEventListener('load', function() {
   displayInfoPage(`Loading..`, `Please wait while the page is initially loaded.`); 
   webview.src = settings.displayUrl; 

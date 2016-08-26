@@ -8,6 +8,13 @@ const BrowserWindow = electron.BrowserWindow
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
+const settings = {
+  displayUrl: "http://httpstat.us/404",
+  //displayUrl: "https://lh4.googleusercontent.com/pyirBixNKOs_rc3C_Ff_rRPotD0kdLOj9CBfVsJzBKgfdrPLfrYKrNI04idpE9FD8rpmRkxf9OzX2xUcQ80MUzF-5ZSSCZw4XIVqOK_gEq7vBGu_GR9BeoEiaIPaDLXchQ",
+  failureRetryTime: 5000, // time in ms to retry after page failed to load (eg: network failure)
+  nonSuccessRetryTime: 15000, // time in ms to retry when getting a non-200 response code from server  
+};
+
 function createWindow () {
   // remove default menu 
   electron.Menu.setApplicationMenu(null); 
@@ -29,6 +36,8 @@ function createWindow () {
 
   // Open the DevTools.
   //mainWindow.webContents.openDevTools()
+
+  mainWindow.settings = settings;
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
