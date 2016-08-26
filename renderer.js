@@ -7,6 +7,7 @@ let body = document.getElementsByTagName('body')[0];
 
 const {screen,remote} = require('electron');
 const {Menu, MenuItem} = remote;
+const _ = require('lodash');
 
 const menu = Menu.buildFromTemplate([
   {
@@ -17,6 +18,15 @@ const menu = Menu.buildFromTemplate([
     }
   },
   {type: 'separator'},
+  {
+    label: "Move to display",
+    submenu: _.map(screen.getAllDisplays(), function(display,index) {
+      return {
+        label: `Display ${index+1}`,
+        click: function() { moveToDisplay(index) },
+      };
+    })
+  },
   {
     label: 'Toggle Fullscreen',
     accelerator: 'F11',
@@ -105,4 +115,11 @@ function displayInfoPage(header, details)
 function hideInfo()
 {
     body.className = '';
+}
+
+function moveToDisplay(displayIndex)
+{
+  let displays = screen.getAllDisplays();
+  let thisWindow = remote.getCurrentWindow();
+  thisWindow.setPosition(displays[displayIndex].workArea.x, displays[displayIndex].workArea.y); 
 }
