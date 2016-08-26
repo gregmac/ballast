@@ -8,12 +8,9 @@ const BrowserWindow = electron.BrowserWindow
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-// track last get-response-details recorded 
-let lastHttpResponse = null;
-
 function createWindow () {
-  // remove default menu
-  electron.Menu.setApplicationMenu(null);
+  // remove default menu 
+  electron.Menu.setApplicationMenu(null); 
 
   // Create the browser window.
   mainWindow = new BrowserWindow({
@@ -66,15 +63,3 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-
-function displayInfoPage(header, details)
-{
-  global.infoPage = {
-    header:header,
-    details:details
-  }
-
-
-  // and load the index.html of the app.
-  mainWindow.loadURL(infoPageUrl);
-}
