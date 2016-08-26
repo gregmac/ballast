@@ -12,7 +12,8 @@ let mainWindow
 let lastHttpResponse = null;
 
 function createWindow () {
-  //electron.Menu.setApplicationMenu(null);
+  // remove default menu
+  electron.Menu.setApplicationMenu(null);
 
   // Create the browser window.
   mainWindow = new BrowserWindow({
@@ -26,10 +27,11 @@ function createWindow () {
     }
   });
 
+  // main content 
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  //mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
