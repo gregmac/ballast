@@ -17,8 +17,17 @@ let mainWindow
 let lastHttpResponse = null;
 
 function createWindow () {
+  electron.Menu.setApplicationMenu(null);
+  
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
+  mainWindow = new BrowserWindow({
+    fullscreen:true,
+    backgroundColor:"#000",
+    darkTheme: true,
+    webPreferences:{
+      zoomFactor: 1.0
+    }
+  });
 
   displayInfoPage(`Loading..`, `Please wait while the page is initially loaded.`);
 
