@@ -17,6 +17,8 @@ function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     //fullscreen:true,
+    width:1024,
+    height:768,
     backgroundColor:"#000",
     darkTheme: true,
     webPreferences:{
