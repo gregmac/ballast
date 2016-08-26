@@ -5,6 +5,44 @@
 let webview = document.getElementById('webcontent');
 let body = document.getElementsByTagName('body')[0]; 
 
+const {screen,remote} = require('electron');
+const {Menu, MenuItem} = remote;
+
+const menu = Menu.buildFromTemplate([
+  {
+    label: 'Reload',
+    accelerator: 'CmdOrCtrl+R',
+    click (item, focusedWindow) {
+      if (focusedWindow) focusedWindow.reload()
+    }
+  },
+  {type: 'separator'},
+  {
+    label: 'Toggle Fullscreen',
+    accelerator: 'F11',
+    click (item, focusedWindow) {
+      focusedWindow.setFullScreen(!focusedWindow.isFullScreen())
+    }
+  },
+  {
+    label: 'Toggle Developer Tools',
+    accelerator: process.platform === 'darwin' ? 'Alt+Command+I' : 'Ctrl+Shift+I',
+    click (item, focusedWindow) {
+      if (focusedWindow) focusedWindow.webContents.toggleDevTools()
+    }
+  },
+  {type: 'separator'},
+  {
+    label:'Exit',
+    accelerator: 'Alt+F4',
+    role:'close'
+  }
+]);
+  
+window.addEventListener('contextmenu', (e) => {
+  e.preventDefault()
+  menu.popup(remote.getCurrentWindow())
+}, false)
 
 const settings = {
   displayUrl: "http://httpstat.us/404",
