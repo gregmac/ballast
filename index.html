@@ -2,14 +2,60 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>WallKiosk</title>
+    <style>
+       body {
+  font-family: sans-serif;
+  color: #333;  
+  font-size:1em;
+  line-height:125%;
+  
+  background: rgb(255,255,255); /* Old browsers */
+  background: -moz-linear-gradient(-45deg,  rgba(255,255,255,1) 0%, rgba(229,229,229,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(229,229,229,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(-45deg,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(-45deg,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(-45deg,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* IE10+ */
+  background: linear-gradient(135deg,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+}
+div {
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40%;
+  min-width: 20em;
+  text-align:center;
+  height:10em;
+}
+footer {
+  position: absolute;
+  bottom:0; 
+  right:0;
+  padding:0.2em;
+}
+a, a:visited {
+  text-decoration:none;
+  color: #333;  
+}
+footer a, footer a:visited {
+  color: #aaa;
+  font-weight:bold;
+}
+    </style>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using node <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
+    <div>
+      <h1><script>document.write(require('electron').remote.getGlobal('infoPage').header)</script></h1>
+      <p><script>document.write(require('electron').remote.getGlobal('infoPage').details)</script></p>
+    </div>
+    <footer>
+      <script>document.write(require('electron').remote.getGlobal('infoPage').footer)</script>
+    </footer>
   </body>
 
   <script>
