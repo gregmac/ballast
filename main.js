@@ -84,8 +84,8 @@ function createWindow (globalSettings, display, onClosed) {
   // Create the browser window.
   let window = new BrowserWindow({
     //fullscreen:true,
-    width:1024,
-    height:768,
+    //width:1024,
+    //height:768,
     backgroundColor:"#000",
     darkTheme: true,
     webPreferences:{

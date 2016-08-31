@@ -10,12 +10,13 @@ const {Menu, MenuItem} = remote;
 const _ = require('lodash');
 
 const globalSettings = remote.getCurrentWindow().globalSettings;
-const display = remote.getCurrentWindow().display;
-console.log('globalSettings', globalSettings, 'display', display);
+const displaySettings = remote.getCurrentWindow().display;
+console.log('globalSettings', globalSettings, 'displaySettings', displaySettings);
 
 window.addEventListener('load', function() {
-  displayInfoPage(`Loading..`, `Please wait while the page is initially loaded.`); 
-  webview.src = display.url; 
+  displayInfoPage(`Loading..`, `Please wait while the page is initially loaded.`);
+  setDefaultPosition(); 
+  webview.src = displaySettings.url; 
 });
 
 webview.addEventListener('did-fail-load',   function(event, errorCode, errorDescription, validatedURL, isMainFrame) {
@@ -30,7 +31,7 @@ webview.addEventListener('did-fail-load',   function(event, errorCode, errorDesc
   displayInfoPage(`Error`, `Page failed to load: ${errorDescription} (${errorCode})`);
   
   setTimeout(function() {
-    webview.src = displayUrl;
+    webview.src = displaySettings.url;
   }, globalSettings.failureRetryTime);
 });
 
@@ -41,11 +42,11 @@ webview.addEventListener('did-get-response-details', function(details) {
 
   if (details.httpResponseCode < 200 || details.httpResponseCode >= 300)
   {
-    console.log(`last response code is ${details.httpResponseCode}, re-loading URL ${settings.displayUrl}`);
+    console.log(`last response code is ${details.httpResponseCode}, re-loading URL ${displaySettings.url}`);
     // TODO: display overlay message
 
     setTimeout(function() {
-      webview.src = settings.displayUrl;
+      webview.src = displaySettings.url;
     }, globalSettings.nonSuccessRetryTime);
   }
 });
@@ -77,6 +78,12 @@ const menu = Menu.buildFromTemplate([
     accelerator: 'F11',
     click (item, focusedWindow) {
       focusedWindow.setFullScreen(!focusedWindow.isFullScreen())
+    }
+  },
+  {
+    label: 'Reset to configured position',
+    click (item, focusedWindow) {
+      setDefaultPosition();
     }
   },
   {
@@ -116,4 +123,28 @@ function moveToDisplay(displayIndex)
   let displays = screen.getAllDisplays();
   let thisWindow = remote.getCurrentWindow();
   thisWindow.setPosition(displays[displayIndex].workArea.x, displays[displayIndex].workArea.y); 
+}
+
+function setDefaultPosition() {
+  let displays = screen.getAllDisplays();
+  let thisWindow = remote.getCurrentWindow();
+
+  let displayIndex = displaySettings.screen - 1;
+  let displayBasePosition = [displays[displayIndex].workArea.x, displays[displayIndex].workArea.y];
+  
+  if (displaySettings.position == 'fullscreen' || displaySettings.size == 'fullscreen') {
+    thisWindow.setPosition(displayBasePosition[0], displayBasePosition[1]);
+    thisWindow.setFullScreen(true);
+  } else {
+    thisWindow.setFullScreen(false);
+    
+    thisWindow.setSize(displaySettings.size[0], displaySettings.size[1]);
+
+    let targetX = displayBasePosition[0] + displaySettings.position[0];
+    let targetY = displayBasePosition[1] + displaySettings.position[1];
+    // todo check within bounds 
+    thisWindow.setPosition(targetX,targetY);
+
+  }
+  
 }
