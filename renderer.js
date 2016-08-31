@@ -120,29 +120,46 @@ function hideInfo()
 
 function moveToDisplay(displayIndex)
 {
-  let displays = screen.getAllDisplays();
-  let thisWindow = remote.getCurrentWindow();
-  thisWindow.setPosition(displays[displayIndex].workArea.x, displays[displayIndex].workArea.y); 
+  setPosition(displayIndex, null, null);
 }
 
 function setDefaultPosition() {
+  setPosition(displaySettings.screen - 1, displaySettings.position, displaySettings.size);
+}
+
+function setPosition(displayIndex, position, size) {
   let displays = screen.getAllDisplays();
   let thisWindow = remote.getCurrentWindow();
 
-  let displayIndex = displaySettings.screen - 1;
   let displayBasePosition = [displays[displayIndex].workArea.x, displays[displayIndex].workArea.y];
+  let currentPosition = thisWindow.getPosition();
+
+  // preserve fullscreen  
+  if (size == null && thisWindow.isFullScreen()) {
+    size = 'fullscreen';
+  }
+  // preserve offset on display, if not specified 
+  if (position == null) {
+    // get current offset on current display 
+    let currentDisplay = screen.getDisplayNearestPoint({x:currentPosition[0], y:currentPosition[1]});
+    position = [currentPosition[0] - currentDisplay.workArea.x, currentPosition[1] - currentDisplay.workArea.y];
+  }
   
-  if (displaySettings.position == 'fullscreen' || displaySettings.size == 'fullscreen') {
-    thisWindow.setPosition(displayBasePosition[0], displayBasePosition[1]);
-    thisWindow.setFullScreen(true);
+  if (position == 'fullscreen' || size == 'fullscreen') {
+    // if not currently fullscreen, or x or y position is wrong (wrong display), move to proper screen
+    if (!thisWindow.isFullScreen() || (currentPosition[0] != displayBasePosition[0]) || (currentPosition[1] != displayBasePosition[1])) { 
+      thisWindow.setFullScreen(false); // must be non-fullscreen to move screens
+      thisWindow.setPosition(displayBasePosition[0], displayBasePosition[1]);
+      thisWindow.setFullScreen(true);
+    }
   } else {
     thisWindow.setFullScreen(false);
-    
-    thisWindow.setSize(displaySettings.size[0], displaySettings.size[1]);
 
-    let targetX = displayBasePosition[0] + displaySettings.position[0];
-    let targetY = displayBasePosition[1] + displaySettings.position[1];
-    // todo check within bounds 
+    if (size != null) thisWindow.setSize(size[0], size[1]);
+
+    let targetX = displayBasePosition[0] + position[0];
+    let targetY = displayBasePosition[1] + position[1];
+    // todo check within bounds of display 
     thisWindow.setPosition(targetX,targetY);
 
   }
