@@ -4,7 +4,10 @@
   "description": "Displays and keeps up specific web pages on one or more (wall-mounted) displays, with resiliancy to network and server problems.",
   "main": "main.js",
   "scripts": {
-    "start":"electron ./app"
+    "postinstall": "install-app-deps",
+    "start": "electron ./app",
+    "dev": "NODE_ENV='development' npm run start",
+    "dist": "build -mwl --x64 --ia32"
   },
   "repository": {
     "type": "git",
@@ -23,6 +26,14 @@
   },
   "homepage": "TBD",
   "devDependencies": {
+    "electron-builder": "^6.3.1",
     "electron-prebuilt": "^1.2.0"
+  },
+  "build": {
+    "appId": "wallkiosk",
+    "app-category-type": "public.app-category.productivity",
+    "win": {
+      "iconUrl": "http://eatodo.s3.amazonaws.com/icon.ico"
+    }
   }
 }
