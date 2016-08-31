@@ -1,10 +1,10 @@
 {
-  "name": "WallKiosk",
+  "name": "wallkiosk",
   "version": "0.0.1",
   "description": "Displays and keeps up specific web pages on one or more (wall-mounted) displays, with resiliancy to network and server problems.",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start":"electron ./app"
   },
   "repository": {
     "type": "git",
@@ -24,9 +24,5 @@
   "homepage": "TBD",
   "devDependencies": {
     "electron-prebuilt": "^1.2.0"
-  },
-  "dependencies": {
-    "lodash": "~4.15.0",
-    "hjson": "~2.0.7"
   }
 }
