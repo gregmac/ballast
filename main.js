@@ -102,6 +102,11 @@ function createWindow (globalSettings, display, onClosed) {
   window.globalSettings = globalSettings;
   window.display = display;
 
+  window.exit = function () {
+    console.log('Application exit requested via window', window);
+    app.quit();
+  }
+
   // Emitted when the window is closed.
   window.on('closed', onClosed);
 }

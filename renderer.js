@@ -95,9 +95,15 @@ const menu = Menu.buildFromTemplate([
   },
   {type: 'separator'},
   {
-    label:'Exit',
+    label:'Close Window',
     accelerator: 'Alt+F4',
     role:'close'
+  },
+  {
+    label:'Exit',
+    click (item, focusedWindow) {
+      remote.getCurrentWindow().exit();
+    }
   }
 ]);
   
