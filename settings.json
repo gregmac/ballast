@@ -10,7 +10,8 @@
         "screen":1,
         "url":"https://confluence.atlassian.com/jira062/files/588581642/588418888/1/1388980500549/jira-examplewallboard.png",
         "position":[200,0],
-        "size":[800,600]
+        //"size":[800,600]
+        "size":"fullscreen"
     },
     {
         "screen":2,
