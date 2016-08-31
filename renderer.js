@@ -9,12 +9,13 @@ const {screen, remote} = require('electron');
 const {Menu, MenuItem} = remote;
 const _ = require('lodash');
 
-const settings = remote.getCurrentWindow().settings;
-console.log('settings', settings);
+const globalSettings = remote.getCurrentWindow().globalSettings;
+const display = remote.getCurrentWindow().display;
+console.log('globalSettings', globalSettings, 'display', display);
 
 window.addEventListener('load', function() {
   displayInfoPage(`Loading..`, `Please wait while the page is initially loaded.`); 
-  webview.src = settings.displayUrl; 
+  webview.src = display.url; 
 });
 
 webview.addEventListener('did-fail-load',   function(event, errorCode, errorDescription, validatedURL, isMainFrame) {
@@ -30,7 +31,7 @@ webview.addEventListener('did-fail-load',   function(event, errorCode, errorDesc
   
   setTimeout(function() {
     webview.src = displayUrl;
-  }, settings.failureRetryTime);
+  }, globalSettings.failureRetryTime);
 });
 
 webview.addEventListener('did-get-response-details', function(details) {
@@ -45,7 +46,7 @@ webview.addEventListener('did-get-response-details', function(details) {
 
     setTimeout(function() {
       webview.src = settings.displayUrl;
-    }, settings.nonSuccessRetryTime);
+    }, globalSettings.nonSuccessRetryTime);
   }
 });
 webview.addEventListener('crashed', function() {

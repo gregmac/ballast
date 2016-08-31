@@ -1,57 +1,50 @@
 const electron = require('electron')
+const _ = require('lodash')
+
 // Module to control application life.
 const app = electron.app
+
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 
-// Keep a global reference of the window object, if you don't, the window will
+// Keep a global reference of all the window objects, if you don't, the windows will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
+let windows = [];
 
 const settings = {
-  displayUrl: "http://httpstat.us/404",
-  //displayUrl: "https://lh4.googleusercontent.com/pyirBixNKOs_rc3C_Ff_rRPotD0kdLOj9CBfVsJzBKgfdrPLfrYKrNI04idpE9FD8rpmRkxf9OzX2xUcQ80MUzF-5ZSSCZw4XIVqOK_gEq7vBGu_GR9BeoEiaIPaDLXchQ",
+  displays: [
+    {
+        "screen":1,
+        "url":"http://httpstat.us/404",
+        "position":[0,0],
+        "size":[200,100]
+    },
+    {
+        "screen":1,
+        "url":"https://confluence.atlassian.com/jira062/files/588581642/588418888/1/1388980500549/jira-examplewallboard.png",
+        "position":[200,0],
+        "size":[800,600]
+    },
+    {
+        "screen":2,
+        "url":"https://lh4.googleusercontent.com/pyirBixNKOs_rc3C_Ff_rRPotD0kdLOj9CBfVsJzBKgfdrPLfrYKrNI04idpE9FD8rpmRkxf9OzX2xUcQ80MUzF-5ZSSCZw4XIVqOK_gEq7vBGu_GR9BeoEiaIPaDLXchQ4",
+        "size":"fullscreen"
+    },
+  ],
   failureRetryTime: 5000, // time in ms to retry after page failed to load (eg: network failure)
   nonSuccessRetryTime: 15000, // time in ms to retry when getting a non-200 response code from server  
 };
 
-function createWindow () {
-  // remove default menu 
-  electron.Menu.setApplicationMenu(null); 
 
-  // Create the browser window.
-  mainWindow = new BrowserWindow({
-    //fullscreen:true,
-    width:1024,
-    height:768,
-    backgroundColor:"#000",
-    darkTheme: true,
-    webPreferences:{
-      zoomFactor: 1.0
-    }
-  });
-
-  // main content 
-  mainWindow.loadURL(`file://${__dirname}/index.html`);
-
-  // Open the DevTools.
-  //mainWindow.webContents.openDevTools()
-
-  mainWindow.settings = settings;
-
-  // Emitted when the window is closed.
-  mainWindow.on('closed', function () {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    mainWindow = null
-  })
-}
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', function() {
+  // remove default menu 
+  electron.Menu.setApplicationMenu(null); 
+  createAllWindows();
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
@@ -66,9 +59,53 @@ app.on('activate', function () {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
-    createWindow()
+    createAllWindows()
   }
 })
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+function createAllWindows() {
+  console.log(settings);
+
+  _.forEach(settings.displays, function(display) {
+    console.log(display);
+    
+    let window;
+    window = createWindow(settings, display, function() { 
+      // Dereference the window object by removing it from array 
+      windows = _.remove(windows, window); 
+    });
+    // add this object 
+    windows.push(window);
+  });
+
+}
+
+
+function createWindow (globalSettings, display, onClosed) {
+  // Create the browser window.
+  let window = new BrowserWindow({
+    //fullscreen:true,
+    width:1024,
+    height:768,
+    backgroundColor:"#000",
+    darkTheme: true,
+    webPreferences:{
+      zoomFactor: 1.0
+    }
+  });
+
+  // main content 
+  window.loadURL(`file://${__dirname}/index.html`);
+
+  // Open the DevTools.
+  //window.webContents.openDevTools()
+
+  window.globalSettings = globalSettings;
+  window.display = display;
+
+  // Emitted when the window is closed.
+  window.on('closed', onClosed);
+}
+
