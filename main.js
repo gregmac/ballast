@@ -1,4 +1,6 @@
 const electron = require('electron')
+const fs = require('fs')
+const hjson = require('hjson')
 const _ = require('lodash')
 
 // Module to control application life.
@@ -11,29 +13,23 @@ const BrowserWindow = electron.BrowserWindow
 // be closed automatically when the JavaScript object is garbage collected.
 let windows = [];
 
-const settings = {
+const defaultSettings = {
   displays: [
     {
         "screen":1,
-        "url":"http://httpstat.us/404",
-        "position":[0,0],
-        "size":[200,100]
-    },
-    {
-        "screen":1,
-        "url":"https://confluence.atlassian.com/jira062/files/588581642/588418888/1/1388980500549/jira-examplewallboard.png",
-        "position":[200,0],
-        "size":[800,600]
-    },
-    {
-        "screen":2,
-        "url":"https://lh4.googleusercontent.com/pyirBixNKOs_rc3C_Ff_rRPotD0kdLOj9CBfVsJzBKgfdrPLfrYKrNI04idpE9FD8rpmRkxf9OzX2xUcQ80MUzF-5ZSSCZw4XIVqOK_gEq7vBGu_GR9BeoEiaIPaDLXchQ4",
+        "url":"http://gregmac.github.com/readme-for-this-app",
         "size":"fullscreen"
-    },
+    }
   ],
   failureRetryTime: 5000, // time in ms to retry after page failed to load (eg: network failure)
   nonSuccessRetryTime: 15000, // time in ms to retry when getting a non-200 response code from server  
 };
+
+
+let settings = hjson.parse(fs.readFileSync('settings.json', 'utf8'));
+console.log('read settings.json', settings);
+_.defaults(settings, defaultSettings);
+console.log('applied defaultSettings', settings);
 
 
 
@@ -43,6 +39,7 @@ const settings = {
 app.on('ready', function() {
   // remove default menu 
   electron.Menu.setApplicationMenu(null); 
+
   createAllWindows();
 })
 
