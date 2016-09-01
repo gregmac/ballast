@@ -7,7 +7,8 @@
   "license": "TBD",
   "homepage": "TBD",
   "dependencies": {
+    "hjson": "~2.0.7",
     "lodash": "~4.15.0",
-    "hjson": "~2.0.7"
+    "yargs": "^5.0.0"
   }
 }
