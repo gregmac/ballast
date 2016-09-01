@@ -1,5 +1,6 @@
 const electron = require('electron')
 const fs = require('fs')
+const path = require('path')
 const hjson = require('hjson')
 const _ = require('lodash')
 
@@ -25,12 +26,7 @@ const defaultSettings = {
   nonSuccessRetryTime: 15000, // time in ms to retry when getting a non-200 response code from server  
 };
 
-
-let settings = hjson.parse(fs.readFileSync('settings.json', 'utf8'));
-console.log('read settings.json', settings);
-_.defaults(settings, defaultSettings);
-console.log('applied defaultSettings', settings);
-
+let settings = null;
 
 
 // This method will be called when Electron has finished
@@ -40,6 +36,7 @@ app.on('ready', function() {
   // remove default menu 
   electron.Menu.setApplicationMenu(null); 
 
+  settings = loadSettingsFile();
   createAllWindows();
 })
 
@@ -111,3 +108,41 @@ function createWindow (globalSettings, display, onClosed) {
   window.on('closed', onClosed);
 }
 
+function loadSettingsFile() {
+  const settingsPaths = [
+    path.join(process.cwd(), "settings.json"),
+    path.join(process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'], "wallkiosk", "settings.json"),
+    process.env.ALLUSERSPROFILE ? path.join(process.env.ALLUSERSPROFILE, "wallkiosk", "settings.json") : null,
+    process.platform == 'linux' ? path.join("etc","wallkiosk","settings.json") : null,
+    process.platform == 'linux' ? path.join("boot","wallkiosk-settings.json") : null,
+    process.env.SystemDrive ? path.join(process.env.SystemDrive,"wallkiosk-settings.json") : null,
+  ];
+  
+  let settingsPath = _.find(settingsPaths, function(x) { return fileExists(x); });
+  if (settingsPath == null) {
+    console.log("Could not find any settings file. Checked: ", _.filter(settingsPaths, function(x) { return x != null; }));
+    return defaultSettings; 
+  }
+
+
+  console.log("Loading settings from", settingsPath);
+  
+  let settings = hjson.parse(fs.readFileSync('settings.json', 'utf8'));
+  console.log('Settings as read', settings);
+  _.defaults(settings, defaultSettings);
+  console.log('Settings with defaultSettings', settings);
+
+  return settings;
+}
+
+function fileExists(filePath)
+{
+    try
+    {
+        return fs.statSync(filePath).isFile();
+    }
+    catch (err)
+    {
+        return false;
+    }
+}
