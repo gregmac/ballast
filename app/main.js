@@ -13,6 +13,7 @@ const BrowserWindow = electron.BrowserWindow
 // command-line
 var argv = require('yargs')
     .usage('Usage: $0 [options]')
+    .alias('c', 'config').describe('c', 'Specify path to configuration file')
     .describe('squirrel-install', 'Internal function').boolean('squirrel-install')
     .describe('squirrel-updated', 'Internal function').boolean('squirrel-updated')
     .describe('squirrel-uninstall', 'Internal function').boolean('squirrel-uninstall')
@@ -128,19 +129,27 @@ function createWindow (globalSettings, display, onClosed) {
 }
 
 function loadSettingsFile() {
-  const settingsPaths = [
-    path.join(process.cwd(), "settings.json"),
-    path.join(process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'], "wallkiosk", "settings.json"),
-    process.env.ALLUSERSPROFILE ? path.join(process.env.ALLUSERSPROFILE, "wallkiosk", "settings.json") : null,
-    process.platform == 'linux' ? path.join("etc","wallkiosk","settings.json") : null,
-    process.platform == 'linux' ? path.join("boot","wallkiosk-settings.json") : null,
-    process.env.SystemDrive ? path.join(process.env.SystemDrive,"wallkiosk-settings.json") : null,
-  ];
+  const settingsPaths =  
+    argv.config ? [ argv.config ] // specified path only  
+    : [ // else, use default paths 
+      path.join(process.cwd(), "settings.json"),
+      path.join(process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'], "wallkiosk", "settings.json"),
+      process.env.ALLUSERSPROFILE ? path.join(process.env.ALLUSERSPROFILE, "wallkiosk", "settings.json") : null,
+      process.platform == 'linux' ? path.join("etc","wallkiosk","settings.json") : null,
+      process.platform == 'linux' ? path.join("boot","wallkiosk-settings.json") : null,
+      process.env.SystemDrive ? path.join(process.env.SystemDrive,"wallkiosk-settings.json") : null,
+    ];
   
   let settingsPath = _.find(settingsPaths, function(x) { return fileExists(x); });
   if (settingsPath == null) {
-    console.log("Could not find any settings file. Checked: ", _.filter(settingsPaths, function(x) { return x != null; }));
-    return defaultSettings; 
+    if (argv.config) {
+      console.log("Could not find settings file "+argv.config+". Exiting.");
+      app.quit();
+      return;
+    } else {
+      console.log("Could not find any settings file. Checked: ", _.filter(settingsPaths, function(x) { return x != null; }));
+      return defaultSettings;
+    } 
   }
 
 
