@@ -146,7 +146,7 @@ function loadSettingsFile() {
 
   console.log("Loading settings from", settingsPath);
   
-  let settings = hjson.parse(fs.readFileSync('settings.json', 'utf8'));
+  let settings = hjson.parse(fs.readFileSync(settingsPath, 'utf8'));
   console.log('Settings as read', settings);
   _.defaults(settings, defaultSettings);
   console.log('Settings with defaultSettings', settings);
