@@ -7,6 +7,10 @@ const _ = require('lodash')
 // Module to control application life.
 const app = electron.app
 
+// handle install events: shortcut creation, etc 
+if(require('electron-squirrel-startup')) return;
+
+
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 
@@ -14,10 +18,6 @@ const BrowserWindow = electron.BrowserWindow
 var argv = require('yargs')
     .usage('Usage: $0 [options]')
     .alias('c', 'config').describe('c', 'Specify path to configuration file')
-    .describe('squirrel-install', 'Internal function').boolean('squirrel-install')
-    .describe('squirrel-updated', 'Internal function').boolean('squirrel-updated')
-    .describe('squirrel-uninstall', 'Internal function').boolean('squirrel-uninstall')
-    .describe('squirrel-obsolete', 'Internal function').boolean('squirrel-obsolete')
     .help('h')
     .alias('h', 'help')
     .version()
@@ -25,10 +25,6 @@ var argv = require('yargs')
 
 //console.log(argv);
 
-if (argv.squirrelInstall || argv.squirrelUninstall || argv.squirrelUpdated || argv.squirrelObsolete) {
-  console.log('Squirrel install action: exiting.');
-  return;
-}
 
 // Keep a global reference of all the window objects, if you don't, the windows will
 // be closed automatically when the JavaScript object is garbage collected.
