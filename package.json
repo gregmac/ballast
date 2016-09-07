@@ -1,14 +1,17 @@
 {
-  "name": "electron-quick-start",
-  "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "name": "wallkiosk",
+  "version": "0.0.1",
+  "description": "Displays and keeps up specific web pages on one or more (wall-mounted) displays, with resiliancy to network and server problems.",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "postinstall": "install-app-deps",
+    "start": "electron ./app",
+    "dev": "NODE_ENV='development' npm run start",
+    "dist": "build --win --x64"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/electron/electron-quick-start.git"
+    "url": "git+https://github.com/TBD"
   },
   "keywords": [
     "Electron",
@@ -16,13 +19,21 @@
     "start",
     "tutorial"
   ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
+  "author": "Greg MacLellean",
+  "license": "TBD",
   "bugs": {
-    "url": "https://github.com/electron/electron-quick-start/issues"
+    "url": "TBD"
   },
-  "homepage": "https://github.com/electron/electron-quick-start#readme",
+  "homepage": "TBD",
   "devDependencies": {
+    "electron-builder": "^6.3.1",
     "electron-prebuilt": "^1.2.0"
+  },
+  "build": {
+    "appId": "wallkiosk",
+    "app-category-type": "public.app-category.productivity",
+    "win": {
+      "iconUrl": "http://eatodo.s3.amazonaws.com/icon.ico"
+    }
   }
 }
