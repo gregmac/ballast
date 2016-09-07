@@ -138,11 +138,11 @@ function loadSettingsFile() {
     // find settings path from possible locations 
     const settingsPaths = [ 
       path.join(process.cwd(), "settings.json"),
-      path.join(process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'], "wallkiosk", "settings.json"),
-      process.env.ALLUSERSPROFILE ? path.join(process.env.ALLUSERSPROFILE, "wallkiosk", "settings.json") : null,
-      process.platform == 'linux' ? path.join("etc","wallkiosk","settings.json") : null,
-      process.platform == 'linux' ? path.join("boot","wallkiosk-settings.json") : null,
-      process.env.SystemDrive ? path.join(process.env.SystemDrive,"wallkiosk-settings.json") : null,
+      path.join(process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'], "ballast", "settings.json"),
+      process.env.ALLUSERSPROFILE ? path.join(process.env.ALLUSERSPROFILE, "ballast", "settings.json") : null,
+      process.platform == 'linux' ? path.join("etc","ballast","settings.json") : null,
+      process.platform == 'linux' ? path.join("boot","ballast-settings.json") : null,
+      process.env.SystemDrive ? path.join(process.env.SystemDrive,"ballast-settings.json") : null,
     ];
     
     settingsPath = _.find(settingsPaths, function(x) { return fileExists(x); });

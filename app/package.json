@@ -1,11 +1,11 @@
 {
-  "name": "wallkiosk",
+  "name": "ballast",
   "version": "0.0.1",
   "description": "Displays and keeps up specific web pages on one or more (wall-mounted) displays, with resiliancy to network and server problems.",
   "main": "main.js",
   "author": "Greg MacLellean",
-  "license": "TBD",
-  "homepage": "TBD",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/gregmac/ballast/",
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
     "hjson": "~2.0.7",
