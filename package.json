@@ -7,7 +7,8 @@
     "postinstall": "install-app-deps",
     "start": "electron ./app",
     "dev": "NODE_ENV='development' npm run start",
-    "dist": "build --win --x64"
+    "dist": "build --win --x64",
+    "build-icons": "icon-gen -i assets/logo.svg -o assets/generated/ -r"
   },
   "repository": {
     "type": "git",
@@ -27,7 +28,8 @@
   "homepage": "https://github.com/gregmac/ballast",
   "devDependencies": {
     "electron-builder": "^6.3.1",
-    "electron-prebuilt": "^1.2.0"
+    "electron-prebuilt": "^1.2.0",
+    "icon-gen": "^1.0.5"
   },
   "build": {
     "appId": "ballast",
