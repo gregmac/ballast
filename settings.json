@@ -1,24 +1,10 @@
 {
-  displays: [
-    {
-        "screen":1,
-        "url":"http://httpstat.us/404",
-        "position":[0,0],
-        "size":[200,100]
-    },
-    {
-        "screen":1,
-        "url":"https://confluence.atlassian.com/jira062/files/588581642/588418888/1/1388980500549/jira-examplewallboard.png",
-        "position":[200,0],
-        //"size":[800,600]
-        "size":"fullscreen"
-    },
-    {
-        "screen":2,
-        "url":"http://comstice.com/wallboard/assets/img/android/wallboard-9box.jpg",
-        "size":"fullscreen"
-    },
-  ],
-  failureRetryTime: 5000, // time in ms to retry after page failed to load (eg: network failure)
-  nonSuccessRetryTime: 15000, // time in ms to retry when getting a non-200 response code from server  
+    displays: [
+        {
+            "url":"http://github.com/gregmac/ballast",
+            "size":[1024,768]
+        },
+    ],
+    failureRetryTime: 5000, // time in ms to retry after page failed to load (eg: network failure)
+    nonSuccessRetryTime: 15000, // time in ms to retry when getting a non-200 response code from server  
 }

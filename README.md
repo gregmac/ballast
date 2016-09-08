@@ -14,12 +14,45 @@ Minimal configuration example:
 
 ```
 {
-  "displays": [
-    {
-        "url":"https://confluence.atlassian.com/jira062/files/588581642/588418888/1/1388980500549/jira-examplewallboard.png",
-        "size":"fullscreen"
-    }
-]
+    "displays": [
+        {
+            "url":"http://example.com/path/to/statuspage",
+            "size":"fullscreen"
+        }
+    ]
+}
+```
+
+The configuration file format is [HJSON](http://hjson.org/), which means you can skip some quotes and use comments. 
+
+Complex example:
+
+```
+{
+    displays: [
+        {
+            url: http://example.com/path/to/statuspage
+            screen: 1
+            size: "fullscreen" // not actually necessary, as size defaults to "fullscreen" 
+        },
+        {
+            url: http://example.com/top-half
+            screen: 2
+            size:[1920,540]
+            position:[0,0]
+        },
+        {
+            url: http://example.com/bottom-half
+            screen: 2
+            size:[1920,540]
+            position:[0,540]
+        },
+    ]
+    
+    failureRetryTime: 5000, // time in ms to retry after page failed to load (eg: network failure)
+    
+    nonSuccessRetryTime: 15000, // time in ms to retry when getting a non-200 response code from server  
+}
 ```
 
 #### License [Apache 2.0](LICENSE.md)
