@@ -35,7 +35,11 @@
     "appId": "ballast",
     "app-category-type": "public.app-category.productivity",
     "win": {
-      "iconUrl": "http://eatodo.s3.amazonaws.com/icon.ico"
+      "iconUrl": "https://raw.githubusercontent.com/gregmac/ballast/master/assets/generated/favicon.ico",
+      "icon": "assets/generated/app.ico"
+    },
+    "mac": {
+      "icon": "assets/generated/app.icns"
     }
   }
 }
