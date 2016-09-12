@@ -15,10 +15,10 @@
     "url": "git+https://github.com/gregmac/ballast.git"
   },
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial"
+    "browser",
+    "kiosk",
+    "wallboard",
+    "electron"
   ],
   "author": "Greg MacLellean",
   "license": "Apache-2.0",
