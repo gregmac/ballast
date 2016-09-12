@@ -7,5 +7,7 @@ cache:
     - app/node_modules
     - $HOME/.electron
     - $HOME/.cache
+sudo: required 
+dist: trusty 
 script:
   - npm run dist
