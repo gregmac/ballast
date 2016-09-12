@@ -7,7 +7,7 @@
     "postinstall": "install-app-deps",
     "start": "electron ./app",
     "dev": "NODE_ENV='development' npm run start",
-    "dist": "build --win --x64",
+    "dist": "build",
     "build-icons": "icon-gen -i assets/logo.svg -o assets/generated/ -r"
   },
   "repository": {
