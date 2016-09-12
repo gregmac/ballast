@@ -21,4 +21,7 @@ build_script:
   - npm --version
   - npm run dist
 
+artifacts:
+  - path: dist\win\*.exe
+
 test: off
