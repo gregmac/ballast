@@ -7,17 +7,18 @@
     "postinstall": "install-app-deps",
     "start": "electron ./app",
     "dev": "NODE_ENV='development' npm run start",
-    "dist": "build --win --x64"
+    "dist": "build --win --x64",
+    "build-icons": "icon-gen -i assets/logo.svg -o assets/generated/ -r"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gregmac/ballast.git"
   },
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial"
+    "browser",
+    "kiosk",
+    "wallboard",
+    "electron"
   ],
   "author": "Greg MacLellean",
   "license": "Apache-2.0",
@@ -27,13 +28,18 @@
   "homepage": "https://github.com/gregmac/ballast",
   "devDependencies": {
     "electron-builder": "^6.3.1",
-    "electron-prebuilt": "^1.2.0"
+    "electron-prebuilt": "^1.2.0",
+    "icon-gen": "^1.0.5"
   },
   "build": {
     "appId": "ballast",
     "app-category-type": "public.app-category.productivity",
     "win": {
-      "iconUrl": "http://eatodo.s3.amazonaws.com/icon.ico"
+      "iconUrl": "https://raw.githubusercontent.com/gregmac/ballast/master/assets/generated/favicon.ico",
+      "icon": "assets/generated/app.ico"
+    },
+    "mac": {
+      "icon": "assets/generated/app.icns"
     }
   }
 }
