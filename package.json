@@ -36,11 +36,7 @@
     "appId": "ballast",
     "app-category-type": "public.app-category.productivity",
     "win": {
-      "iconUrl": "https://raw.githubusercontent.com/gregmac/ballast/master/assets/generated/favicon.ico",
-      "icon": "assets/generated/app.ico"
-    },
-    "mac": {
-      "icon": "assets/generated/app.icns"
+      "iconUrl": "https://raw.githubusercontent.com/gregmac/ballast/master/build/favicon.ico",
     }
   }
 }
