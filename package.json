@@ -7,8 +7,8 @@
     "postinstall": "install-app-deps",
     "start": "electron ./app",
     "dev": "NODE_ENV='development' npm run start",
-    "dist": "build --win --x64",
-    "build-icons": "icon-gen -i assets/logo.svg -o assets/generated/ -r"
+    "dist": "build",
+    "build-icons": "node ./scripts/generate-icons.js"
   },
   "repository": {
     "type": "git",
@@ -29,17 +29,14 @@
   "devDependencies": {
     "electron-builder": "^6.3.1",
     "electron-prebuilt": "^1.2.0",
-    "icon-gen": "^1.0.5"
+    "icon-gen": "^1.0.5",
+    "fs-extra": "^0.30.0"
   },
   "build": {
     "appId": "ballast",
     "app-category-type": "public.app-category.productivity",
     "win": {
-      "iconUrl": "https://raw.githubusercontent.com/gregmac/ballast/master/assets/generated/favicon.ico",
-      "icon": "assets/generated/app.ico"
-    },
-    "mac": {
-      "icon": "assets/generated/app.icns"
+      "iconUrl": "https://raw.githubusercontent.com/gregmac/ballast/master/build/favicon.ico"
     }
   }
 }
