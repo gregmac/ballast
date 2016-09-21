@@ -1,6 +1,6 @@
 {
   "name": "ballast",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Displays and keeps up specific web pages on one or more (wall-mounted) displays, with resiliancy to network and server problems.",
   "main": "main.js",
   "scripts": {
