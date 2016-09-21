@@ -12,6 +12,10 @@ cache:
 init:
   - git config --global core.autocrlf input
 
+environment:
+  GH_TOKEN:
+    secure: IhA6RlRE79jPEwoTknXltoyllUvnXE+IQw+Rmkqx31Iu0KKErVVUvlafo236Cewb
+
 install:
   - ps: Install-Product node 4.4 x64
   - npm install
