@@ -25,3 +25,15 @@ artifacts:
   - path: dist\win\*.exe
 
 test: off
+
+deploy:
+  release: ballast-v$(appveyor_build_version)-win
+  description: 'Ballast v$(appveyor_build_version) (Windows)'
+  provider: GitHub
+  auth_token:
+    secure: 2UWID8annSgDmjvOW4PiFoW7LCz1F3euGszzrjgEY9OdwDRlbuu88wfmShj0tQI0
+  artifact: /.*/
+  draft: true
+  on:
+    branch: master                # release from master branch only
+    appveyor_repo_tag: true       # deploy on tag push only
