@@ -5,6 +5,7 @@ platform:
 
 cache:
   - node_modules
+  - temp
   - app\node_modules
   - '%APPDATA%\npm-cache'
   - '%USERPROFILE%\.electron'
