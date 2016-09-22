@@ -32,5 +32,7 @@ artifacts:
   - path: dist\ballast-linux-x64
   - path: dist\ballast-win32-ia32
   - path: dist\ballast-win32-x64
+  - path: dist\ballast-linux-x64\resources\app.asar
+    name: app.asar
 
 test: off
