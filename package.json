@@ -7,7 +7,7 @@
     "postinstall": "npm --prefix ./app install ./app",
     "start": "electron ./app",
     "dev": "NODE_ENV='development' npm run start",
-    "dist": "electron-packager ./app ballast --all --tmpdir ./temp --out ./dist",
+    "dist": "electron-packager ./app ballast --all --tmpdir=./temp --out=./dist",
     "build-icons": "node ./scripts/generate-icons.js"
   },
   "repository": {
