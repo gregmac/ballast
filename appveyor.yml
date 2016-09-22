@@ -27,6 +27,10 @@ build_script:
   - npm run dist
 
 artifacts:
-  - path: dist\win\*.exe
+  - path: dist\ballast-linux-armv7l
+  - path: dist\ballast-linux-ia32
+  - path: dist\ballast-linux-x64
+  - path: dist\ballast-win32-ia32
+  - path: dist\ballast-win32-x64
 
 test: off
