@@ -4,7 +4,7 @@
   "description": "Displays and keeps up specific web pages on one or more (wall-mounted) displays, with resiliancy to network and server problems.",
   "main": "main.js",
   "scripts": {
-    "postinstall": "install-app-deps",
+    "postinstall": "npm --prefix ./app install ./app",
     "start": "electron ./app",
     "dev": "NODE_ENV='development' npm run start",
     "dist": "electron-packager ./app ballast --all --tmpdir ./temp --out ./dist",
