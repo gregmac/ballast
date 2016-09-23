@@ -139,6 +139,7 @@ function loadSettingsFile() {
     const settingsPaths = [ 
       path.join(process.cwd(), "settings.json"),
       path.join(process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'], "ballast", "settings.json"),
+      process.env.APPDATA ? path.join(process.env.APPDATA, "ballast", "settings.json") : null,
       process.env.ALLUSERSPROFILE ? path.join(process.env.ALLUSERSPROFILE, "ballast", "settings.json") : null,
       process.platform == 'linux' ? path.join("etc","ballast","settings.json") : null,
       process.platform == 'linux' ? path.join("boot","ballast-settings.json") : null,
