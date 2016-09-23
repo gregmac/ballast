@@ -9,7 +9,7 @@
     "dev": "NODE_ENV='development' npm run start",
     "dist": "gulp",
     "dist-mac": "electron-packager ./app ballast --tmpdir=./temp --out=./dist --overwrite --download.cache=./temp/downloads --icon=build/icons/icon.icns --version=1.4.0 --asar --platform=darwin --platform=mas --arch=all",
-    "build-icons": "node ./scripts/generate-icons.js"
+    "build-icons": "gulp generate-icons"
   },
   "repository": {
     "type": "git",
