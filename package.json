@@ -7,7 +7,8 @@
     "postinstall": "npm --prefix ./app install ./app",
     "start": "electron ./app",
     "dev": "NODE_ENV='development' npm run start",
-    "dist": "electron-packager ./app ballast --all --tmpdir=./temp --out=./dist --overwrite --download.cache=./temp/downloads --icon=build/icons/icon.ico --version=1.4.0 --asar ",
+    "dist": "electron-packager ./app ballast --tmpdir=./temp --out=./dist --overwrite --download.cache=./temp/downloads --icon=build/icons/icon.ico --version=1.4.0 --asar --platform=win32 --platform=linux --arch=ia32 --arch=x64 --arch=armv7l",
+    "dist-mac": "electron-packager ./app ballast --tmpdir=./temp --out=./dist --overwrite --download.cache=./temp/downloads --icon=build/icons/icon.ico --version=1.4.0 --asar --platform=darwin --platform=mac ",
     "build-icons": "node ./scripts/generate-icons.js"
   },
   "repository": {
