@@ -1,9 +1,9 @@
 var gulp = require('gulp');
 var icongen = require( 'icon-gen' );
 var fs = require('fs-extra');
+var packager = require('electron-packager')
 
-gulp.task('package', function(cb){
-    var packager = require('electron-packager')
+gulp.task('package', function(done){
     packager(
         {
             dir: "app",
@@ -20,7 +20,7 @@ gulp.task('package', function(cb){
             version: "1.4.0"
         }, function done_callback (err, appPaths) {
             console.log("Done electron-packager", appPaths); 
-            cb(err);
+            done(err);
         });
 });
 
