@@ -32,7 +32,12 @@
     "fs-extra": "^0.30.0",
     "gulp": "^3.9.1",
     "gulp-json-modify": "^1.0.2",
-    "icon-gen": "^1.0.5"
+    "icon-gen": {
+      "version":"~1.0.5",
+      "dependencies": {
+        "svg2png": "~3.0.1"
+      }
+    }
   },
   "build": {
     "appId": "ballast",
