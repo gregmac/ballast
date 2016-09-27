@@ -51,7 +51,7 @@ gulp.task('updateAppPackageJson', function () {
         .pipe(gulp.dest('./app'));
 });
 
-gulp.task('package', ['updateVersions'], function(done){
+gulp.task('package', ['updatePackageJson','updateAppPackageJson'], function(done){
     packager(
         {
             dir: "app",
