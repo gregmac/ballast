@@ -2,13 +2,62 @@ var gulp = require('gulp');
 var icongen = require( 'icon-gen' );
 var fs = require('fs-extra');
 var packager = require('electron-packager')
+var jsonModify = require('gulp-json-modify');
+var version = null;
 
-gulp.task('package', function(done){
+// get version based on git tag (if applicable)
+var tagVersion = process.env.APPVEYOR_REPO_TAG_NAME || process.env.TRAVIS_TAG || process.env.CIRCLE_TAG;
+if (tagVersion) {
+    if (match = tagVersion.match(/v?(\d+\.\d+(?:\.\d+)?)/)) {
+        version = match[1];
+    } else {
+        console.log(`Found tag, but doesn't look like a version number: ${tagVersion}`);
+    }
+}
+
+// read version from package.json 
+if (version == null) {     
+    var packageJson = fs.readJsonSync('package.json');
+    if (!packageJson.version.match(/\d+\.\d+(\.\d+)?/)) {
+        throw `Invalid version format in package.json: ${packageJson.version}`;
+    }
+    version = packageJson.version;
+}
+
+// get build number from CI environment and append to version 
+var buildNumber = process.env.APPVEYOR_BUILD_NUMBER || process.env.TRAVIS_BUILD_NUMBER || process.env.CIRCLE_BUILD_NUM;
+if (buildNumber) {
+    version = `${version}-${buildNumber}`;
+}
+
+console.log(`Using version: ${version}`);
+
+
+gulp.task('updatePackageJson', function () {
+    return gulp.src([ './package.json' ])
+        .pipe(jsonModify({
+            key: 'version',
+            value: version
+        }))
+        .pipe(gulp.dest('./'));
+});
+
+gulp.task('updateAppPackageJson', function () {
+    return gulp.src([ './app/package.json' ])
+        .pipe(jsonModify({
+            key: 'version',
+            value: version
+        }))
+        .pipe(gulp.dest('./app'));
+});
+
+gulp.task('package', ['updateVersions'], function(done){
     packager(
         {
             dir: "app",
             arch: "all",
             asar: true,
+            "build-version": version,
             download: {
                 cache: "temp/downloads"
             },
@@ -25,6 +74,7 @@ gulp.task('package', function(done){
             done(err);
         });
 });
+
 
 gulp.task('generate-icons', function(done) {
 
@@ -50,4 +100,4 @@ gulp.task('generate-icons', function(done) {
     }
 });
 
-gulp.task('default', ['package']);
+gulp.task('default', ['updatePackageJson','updateAppPackageJson','package']);
