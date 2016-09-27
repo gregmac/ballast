@@ -12,7 +12,7 @@ gulp.task('package', function(done){
             download: {
                 cache: "temp/downloads"
             },
-            icon: "build/icons/icon.ico",
+            icon: "build/icons/icon", // extension will autocomplete based on platform 
             out: "dist",
             overwrite: true,
             platform: ["win32","linux"],
