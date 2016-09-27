@@ -15,7 +15,9 @@ gulp.task('package', function(done){
             icon: "build/icons/icon", // extension will autocomplete based on platform 
             out: "dist",
             overwrite: true,
-            platform: ["win32","linux"],
+            platform: (process.platform == 'win32'
+                ? ["win32", "linux"]
+                : ["linux", "mas", "darwin"]),
             tmpdir: "temp",
             version: "1.4.0"
         }, function done_callback (err, appPaths) {
