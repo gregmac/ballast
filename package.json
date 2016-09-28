@@ -7,9 +7,8 @@
     "postinstall": "npm --prefix ./app install ./app",
     "start": "electron ./app",
     "dev": "NODE_ENV='development' npm run start",
-    "dist": "electron-packager ./app ballast --tmpdir=./temp --out=./dist --overwrite --download.cache=./temp/downloads --icon=build/icons/icon.ico --version=1.4.0 --asar --platform=win32 --platform=linux --arch=all",
-    "dist-mac": "electron-packager ./app ballast --tmpdir=./temp --out=./dist --overwrite --download.cache=./temp/downloads --icon=build/icons/icon.icns --version=1.4.0 --asar --platform=darwin --platform=mas --arch=all",
-    "build-icons": "node ./scripts/generate-icons.js"
+    "dist": "gulp",
+    "build-icons": "gulp generate-icons"
   },
   "repository": {
     "type": "git",
@@ -30,8 +29,10 @@
   "devDependencies": {
     "electron-packager": "^8.0.0",
     "electron-prebuilt": "^1.2.0",
-    "icon-gen": "^1.0.5",
-    "fs-extra": "^0.30.0"
+    "fs-extra": "^0.30.0",
+    "gulp": "^3.9.1",
+    "gulp-json-modify": "^1.0.2",
+    "icon-gen": "~1.0.5"
   },
   "build": {
     "appId": "ballast",

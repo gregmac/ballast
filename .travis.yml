@@ -18,7 +18,9 @@ before_install:
   sudo apt-get install --no-install-recommends -y icnsutils graphicsmagick xz-utils
   
 script:
-  - npm run dist-mac
+  - npm prune 
+  - npm list 
+  - npm run dist
   
 env:
   global:
