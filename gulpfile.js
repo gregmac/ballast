@@ -32,6 +32,11 @@ if (buildNumber) {
 
 console.log(`Using version: ${version}`);
 
+if (process.env.APPVEYOR_BUILD_NUMBER) {
+    console.log('AppVeyor detected, running `appveyor UpdateBuild`');
+    require('child_process').exec(`appveyor UpdateBuild -Version "${version}"`);
+}
+
 
 gulp.task('updatePackageJson', function () {
     return gulp.src([ './package.json' ])
