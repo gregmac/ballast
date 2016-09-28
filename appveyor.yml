@@ -25,13 +25,15 @@ build_script:
   - npm --version
   - npm run dist
 
+after_build:
+  - copy dist\ballast-win32-x64\resources\app.asar dist\app.asar 
+
 artifacts:
   - path: dist\ballast-linux-armv7l
   - path: dist\ballast-linux-ia32
   - path: dist\ballast-linux-x64
   - path: dist\ballast-win32-ia32
   - path: dist\ballast-win32-x64
-  - path: dist\ballast-linux-x64\resources\app.asar
-    name: app.asar
+  - path: dist\app.asar
 
 test: off
