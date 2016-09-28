@@ -20,11 +20,12 @@ environment:
 install:
   - ps: Install-Product node 4.4 x64
   - npm install
-
+  - npm prune
+  - npm list 
+  
 build_script:
   - node --version
   - npm --version
-  - npm list 
   - npm run dist
 
 artifacts:
