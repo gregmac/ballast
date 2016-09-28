@@ -27,7 +27,7 @@ if (version == null) {
 // get build number from CI environment and append to version 
 var buildNumber = process.env.APPVEYOR_BUILD_NUMBER || process.env.TRAVIS_BUILD_NUMBER || process.env.CIRCLE_BUILD_NUM;
 if (buildNumber) {
-    version = `${version}-${buildNumber}`;
+    version = `${version}+${buildNumber}`;
 }
 
 console.log(`Using version: ${version}`);
