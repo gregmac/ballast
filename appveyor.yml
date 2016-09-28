@@ -24,6 +24,7 @@ install:
 build_script:
   - node --version
   - npm --version
+  - npm list 
   - npm run dist
 
 artifacts:
