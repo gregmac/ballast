@@ -27,8 +27,8 @@
   },
   "homepage": "https://github.com/gregmac/ballast",
   "devDependencies": {
-    "electron-packager": "^8.0.0",
-    "electron-prebuilt": "^1.2.0",
+    "electron-packager": "^8.7.1",
+    "electron": "^1.6.10",
     "fs-extra": "^0.30.0",
     "gulp": "^3.9.1",
     "gulp-json-modify": "^1.0.2",
