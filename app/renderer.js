@@ -137,6 +137,7 @@ function setPosition(displayIndex, position, size) {
   let displays = screen.getAllDisplays();
   let thisWindow = remote.getCurrentWindow();
 
+  if (!displayIndex) displayIndex = 0;
   let displayBasePosition = [displays[displayIndex].workArea.x, displays[displayIndex].workArea.y];
   let currentPosition = thisWindow.getPosition();
 
